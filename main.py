@@ -8,7 +8,7 @@ load_dotenv(dotenv_path="config")
 
 default_intents = discord.Intents.all()
 default_intents.members = True
-bot = commands.Bot(command_prefix="/", intents=default_intents)
+bot = commands.Bot(command_prefix="!", intents=default_intents)
 
 
 @bot.event
