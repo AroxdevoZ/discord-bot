@@ -51,6 +51,6 @@ for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
         bot.load_extension(f'cogs.{filename[:-3]}')
 
-bot.run(heroku config:unset TOKEN)
+bot.run(ENV['TOKEN'])
 
 
