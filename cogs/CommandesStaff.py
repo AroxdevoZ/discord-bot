@@ -26,22 +26,22 @@ class CommandesStaff(commands.Cog):
 
             bot.warnings[guild.id] = {}
 
-            for guild in bot.guilds:
-                async with aiofiles.open(f"{guild.id}.txt", mode="r") as file:
-                    lines = await file.readlines()
+            #for guild in bot.guilds:
+                #async with aiofiles.open(f"{guild.id}.txt", mode="r") as file:
+                    #lines = await file.readlines()
 
-                    for line in lines:
-                        data = line.split(" ")
-                        member_id = int(data[1])
-                        admin_id = int(data[2])
-                        reason = " ".join(data[2:]).strip("\n")
+                    #for line in lines:
+                        #data = line.split(" ")
+                        #member_id = int(data[1])
+                        #admin_id = int(data[2])
+                        #reason = " ".join(data[2:]).strip("\n")
 
-                        try:
-                            bot.warnings[guild.id][member_id][1] += 1
-                            bot.warnings[guild.id][member_id][2].append((admin_id, reason))
+                        #try:
+                            #bot.warnings[guild.id][member_id][1] += 1
+                            #bot.warnings[guild.id][member_id][2].append((admin_id, reason))
 
-                        except KeyError:
-                            bot.warnings[guild.id][member_id] = [1, [(admin_id, reason)]]
+                        #except KeyError:
+                            #bot.warnings[guild.id][member_id] = [1, [(admin_id, reason)]]
 
         print("CommandersStaff loaded")
 
