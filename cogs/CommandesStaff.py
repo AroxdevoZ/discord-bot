@@ -196,9 +196,7 @@ class CommandesStaff(commands.Cog):
         embed.add_field(name="La raison du warn est :", value=reason, inline=False)
 
         war = bot.get_channel(1019591863738564678)
-        admin = ctx.guild.get_member(ctx.author.name)
         await war.send(embed=embed)
-        await ctx.send(f"{member.mention} a {count} {'Avertissement' if first_warning else 'Avertissement'}.")
 
     # Commande pour voir le nombre d'avertissement et les raisons de ce dernier pour un membre
     @commands.command()
