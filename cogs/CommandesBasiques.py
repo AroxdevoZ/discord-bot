@@ -28,7 +28,7 @@ class CommandesBasiques(commands.Cog):
     @commands.command()
     async def createur(self, ctx):
         await ctx.channel.purge(limit=1)
-        embed = discord.Embed(title="Comment obtenir le rôle Créateur?", description="Si tu as une chaine YouTube, TikTok ou Twitch et que tu souhaites que tes vidéos/lives soient annoncés sur notre serveur je t'invite à envoyer le lien de cette dernière au capitaine @Le_beater🐺l'ami des loups🐺#2498 qui examinera t'a demande au plus vite. ",color=0x00ff00)
+        embed = discord.Embed(title="Comment obtenir le rôle Créateur?", description="Si tu as une chaine YouTube, TikTok ou Twitch et que tu souhaites que tes vidéos/lives soient annoncés sur notre serveur je t'invite à envoyer le lien de cette dernière au capitaine Le_beater qui examinera t'a demande au plus vite. ",color=0x00ff00)
         embed.set_author(name=ctx.author.name, icon_url=ctx.author.avatar_url)
         embed.set_thumbnail(url="https://cdn3.emoji.gg/emojis/5596-youtube-logo.png")
 
