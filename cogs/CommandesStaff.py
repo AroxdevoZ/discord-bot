@@ -187,10 +187,17 @@ class CommandesStaff(commands.Cog):
 
         async with aiofiles.open(f"{ctx.guild.id}.txt", mode="a") as file:
             await file.write(f"{member.id} {ctx.author.id} {reason}\n")
+            
+        embed = discord.Embed(title="**Avertissement**", description="Un membre a été warn !",
+                              url="http://libertalia.cluster1.easy-hebergement.net/fr/reglement-de-la-communaute", color=0x005eff)
+        embed.set_author(name=ctx.author.name, icon_url=ctx.author.avatar_url)
+        embed.set_thumbnail(url="https://cdn3.emoji.gg/emojis/2889-virus.png")
+        embed.add_field(name="Le Membre warn est :", value=user.name, inline=True)
+        embed.add_field(name="La raison du warn est :", value=reason, inline=False)
 
         war = bot.get_channel(1019591863738564678)
         admin = ctx.guild.get_member(ctx.author.name)
-        await war.send(f"{member.mention} à pris un avertissement de la part de {admin.mention}pour : {reason}")
+        await war.send(embed=embed)
         await ctx.send(f"{member.mention} a {count} {'Avertissement' if first_warning else 'Avertissement'}.")
 
     # Commande pour voir le nombre d'avertissement et les raisons de ce dernier pour un membre
