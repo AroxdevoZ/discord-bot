@@ -151,7 +151,7 @@ class CommandesStaff(commands.Cog):
     # Commande pour déban un membre (Ne fonctionne pas)
     @commands.command()
     @commands.has_permissions(ban_members=True)
-    async def unban(self, ctx, user, *reason):
+    async def unban(self, ctx, user, *, reason="Aucune raison n'a été donné"):
         await ctx.channel.purge(limit=1)
         reason = " ".join(reason)
         userName, userId = user.split("#")
