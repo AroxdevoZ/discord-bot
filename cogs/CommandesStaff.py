@@ -148,7 +148,7 @@ class CommandesStaff(commands.Cog):
         ban = bot.get_channel(1019591239429005323)
         await ban.send(embed=embed)
 
-    # Commande pour déban un membre
+    # Commande pour déban un membre (Ne fonctionne pas)
     @commands.command()
     @commands.has_permissions(ban_members=True)
     async def unban(self, ctx, user, *reason):
@@ -163,62 +163,62 @@ class CommandesStaff(commands.Cog):
                 return
         await ctx.send(f"L'utilisateur {user} n'a pas été trouvé.")
 
-    # Commande pour avertir un membre
-    @commands.command()
-    @commands.has_permissions(administrator=True)
-    async def warn(self, ctx, member: discord.Member = None, *, reason=None):
-        await ctx.channel.purge(limit=1)
-        if member is None:
-            return await ctx.send("Le membre fourni n'a pas pu être trouvé ou vous avez oublié d'en fournir un.")
+    # Commande pour avertir un membre (fonctionne mais n'affice pas le message dans le channel approprié et ne garde pas les warn en mémoire)
+    #@commands.command()
+    #@commands.has_permissions(administrator=True)
+    #async def warn(self, ctx, member: discord.Member = None, *, reason=None):
+        #await ctx.channel.purge(limit=1)
+        #if member is None:
+            #return await ctx.send("Le membre fourni n'a pas pu être trouvé ou vous avez oublié d'en fournir un.")
 
-        if reason is None:
-            return await ctx.send("Veuillez fournir une raison pour avertir cet utilisateur.")
+        #if reason is None:
+            #return await ctx.send("Veuillez fournir une raison pour avertir cet utilisateur.")
 
-        try:
-            first_warning = False
-            bot.warnings[ctx.guild.id][member.id][0] += 1
-            bot.warnings[ctx.guild.id][member.id][1].append((ctx.author.id, reason))
+        #try:
+            #first_warning = False
+            #bot.warnings[ctx.guild.id][member.id][0] += 1
+            #bot.warnings[ctx.guild.id][member.id][1].append((ctx.author.id, reason))
 
-        except KeyError:
-            first_warning = True
-            bot.warnings[ctx.guild.id][member.id] = [1, [(ctx.author.id, reason)]]
+        #except KeyError:
+            #first_warning = True
+            #bot.warnings[ctx.guild.id][member.id] = [1, [(ctx.author.id, reason)]]
 
-        count = bot.warnings[ctx.guild.id][member.id][0]
+        #count = bot.warnings[ctx.guild.id][member.id][0]
 
-        async with aiofiles.open(f"{ctx.guild.id}.txt", mode="a") as file:
-            await file.write(f"{member.id} {ctx.author.id} {reason}\n")
+        #async with aiofiles.open(f"{ctx.guild.id}.txt", mode="a") as file:
+            #await file.write(f"{member.id} {ctx.author.id} {reason}\n")
             
-        embed = discord.Embed(title="**Avertissement**", description="Un membre a été warn !",
-                              url="http://libertalia.cluster1.easy-hebergement.net/fr/reglement-de-la-communaute", color=0x005eff)
-        embed.set_author(name=ctx.author.name, icon_url=ctx.author.avatar_url)
-        embed.set_thumbnail(url="https://cdn3.emoji.gg/emojis/2889-virus.png")
-        embed.add_field(name="Le Membre warn est :", value=user.name, inline=True)
-        embed.add_field(name="La raison du warn est :", value=reason, inline=False)
+        #embed = discord.Embed(title="**Avertissement**", description="Un membre a été warn !",
+                              #url="http://libertalia.cluster1.easy-hebergement.net/fr/reglement-de-la-communaute", color=0x005eff)
+        #embed.set_author(name=ctx.author.name, icon_url=ctx.author.avatar_url)
+        #embed.set_thumbnail(url="https://cdn3.emoji.gg/emojis/2889-virus.png")
+        #embed.add_field(name="Le Membre warn est :", value=user.name, inline=True)
+        #embed.add_field(name="La raison du warn est :", value=reason, inline=False)
 
-        war = bot.get_channel(1019591863738564678)
-        await war.send(embed=embed)
+        #war = bot.get_channel(1019591863738564678)
+        #await war.send(embed=embed)
 
     # Commande pour voir le nombre d'avertissement et les raisons de ce dernier pour un membre
-    @commands.command()
-    @commands.has_permissions(administrator=True)
-    async def warnings(self, ctx, member: discord.Member=None):
-        await ctx.channel.purge(limit=1)
-        if member is None:
-            return await ctx.send("Le membre fourni n'a pas pu être trouvé ou vous avez oublié d'en fournir un.")
+    #@commands.command()
+    #@commands.has_permissions(administrator=True)
+    #async def warnings(self, ctx, member: discord.Member=None):
+        #await ctx.channel.purge(limit=1)
+        #if member is None:
+            #return await ctx.send("Le membre fourni n'a pas pu être trouvé ou vous avez oublié d'en fournir un.")
 
-        embed = discord.Embed(title=f"Affichage d'avertissement pour {member.name}", description="", colour=discord.Color.red())
-        embed.set_thumbnail(url="https://emoji.gg/assets/emoji/Warning.png")
-        try:
-            i = 1
-            for admin_id, reason in bot.warnings[ctx.guild.id][member.id][1]:
-                admin = ctx.guild.get_member(admin_id)
-                embed.description += f"**Avertissement {i}** donné par: {admin.mention} **Pour la raison suivante:** *'{reason}'*.\n"
-                i += 1
-            warinfo = bot.get_channel(1019591863738564678)
-            await warinfo.send(embed=embed)
+        #embed = discord.Embed(title=f"Affichage d'avertissement pour {member.name}", description="", colour=discord.Color.red())
+        #embed.set_thumbnail(url="https://emoji.gg/assets/emoji/Warning.png")
+        #try:
+            #i = 1
+            #for admin_id, reason in bot.warnings[ctx.guild.id][member.id][1]:
+                #admin = ctx.guild.get_member(admin_id)
+                #embed.description += f"**Avertissement {i}** donné par: {admin.mention} **Pour la raison suivante:** *'{reason}'*.\n"
+                #i += 1
+            #warinfo = bot.get_channel(1019591863738564678)
+            #await warinfo.send(embed=embed)
 
-        except KeyError:
-            await ctx.send("Cet utilisateur n'a aucun avertissement.")
+        #except KeyError:
+            #await ctx.send("Cet utilisateur n'a aucun avertissement.")
 
     # Création du role Muted si pas présent sur le serveur
     async def createMutedRole(self, ctx):
