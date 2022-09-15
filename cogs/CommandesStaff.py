@@ -155,7 +155,7 @@ class CommandesStaff(commands.Cog):
         await ctx.channel.purge(limit=1)
         reason = " ".join(reason)
         userName, userId = user.split("#")
-        bannedUsers = await ctx.guild.ban(user)
+        bannedUsers = await ctx.guild.ban()
         for i in bannedUsers:
             if i.user.name == userName and i.user.discriminator == userId:
                 await ctx.guild.unban(i.user, reason=reason)
