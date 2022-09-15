@@ -241,8 +241,6 @@ class CommandesStaff(commands.Cog):
     @commands.command()
     @commands.has_permissions(manage_roles=True)
     async def mute(self, ctx, member: discord.Member, *, reason="Aucune raison n'a été renseigné"):
-        role = discord.utils.get(guild.roles, name='Matelot')
-        await member.remove_roles(role)
         await ctx.channel.purge(limit=1)
         mutedRole = await self.getMutedRole(ctx)
         await member.add_roles(mutedRole, reason=reason)
