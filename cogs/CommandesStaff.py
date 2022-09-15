@@ -151,17 +151,18 @@ class CommandesStaff(commands.Cog):
     # Commande pour déban un membre (Ne fonctionne pas)
     @commands.command()
     @commands.has_permissions(ban_members=True)
-   async def unban(ctx, *, member):
-    banned_users = await ctx.guild.bans()
-    member_name, member_discriminator = member.split('#')
-    for ban_entry in banned_users:
-        user = ban_entry.user
+        async def unban(ctx, *, member):
+        banned_users = await ctx.guild.bans()
+        member_name, member_discriminator = member.split('#')
+        for ban_entry in banned_users:
+            user = ban_entry.user
 
-        if (user.name, user.discriminator) == (member_name,
+            if (user.name, user.discriminator) == (member_name,
                                                member_discriminator):
-            await ctx.guild.unban(user)
-            await ctx.send(f' {user.mention} à été déban')
-            return
+                await ctx.guild.unban(user)
+                await ctx.send(f' {user.mention} à été déban')
+                return
+            
         await ctx.send(f"L'utilisateur {user} n'a pas été trouvé.")
 
     # Commande pour avertir un membre (fonctionne mais n'affice pas le message dans le channel approprié et ne garde pas les warn en mémoire)
