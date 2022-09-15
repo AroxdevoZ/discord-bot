@@ -241,13 +241,13 @@ class CommandesStaff(commands.Cog):
     @commands.command()
     @commands.has_permissions(manage_roles=True)
     async def mute(self, ctx, member: discord.Member, *, reason="Aucune raison n'a été renseigné"):
-        await member.add_roles(mutedRole, reason=reason)
         role = discord.utils.get(guild.roles, name='Matelot')
+        await member.remove_roles(role)
         await ctx.channel.purge(limit=1)
         mutedRole = await self.getMutedRole(ctx)
-        await member.remove_roles(role)
+        await member.add_roles(mutedRole, reason=reason)
         await ctx.send(f"{member.mention} a été mute !")
-
+        
     # Commande pour Mute temporairement un membre
     @commands.command()
     @commands.has_permissions(manage_messages=True)
