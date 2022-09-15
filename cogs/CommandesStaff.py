@@ -151,16 +151,15 @@ class CommandesStaff(commands.Cog):
     # Commande pour déban un membre (Ne fonctionne pas)
     @commands.command()
     @commands.has_permissions(ban_members=True)
-        async def unban(ctx, *, member):
-        banned_users = await ctx.guild.bans()
-        member_name, member_discriminator = member.split('#')
-        for ban_entry in banned_users:
-            user = ban_entry.user
-
-            if (user.name, user.discriminator) == (member_name,
-                                               member_discriminator):
-                await ctx.guild.unban(user)
-                await ctx.send(f' {user.mention} à été déban')
+    async def unban(self, ctx, user, *reason):
+        await ctx.channel.purge(limit=1)
+        reason = " ".join(reason)
+        userName, userId = user.split("#")
+        bannedUsers = await ctx.guild.bans()
+        for i in bannedUsers:
+            if i.user.name == userName and i.user.discriminator == userId:
+                await ctx.guild.unban(i.user, reason=reason)
+                await ctx.send(f"{user} à été unban.")
                 return
             
         await ctx.send(f"L'utilisateur {user} n'a pas été trouvé.")
