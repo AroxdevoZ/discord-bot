@@ -160,7 +160,7 @@ class CommandesStaff(commands.Cog):
         if (user.name, user.discriminator) == (member_name,
                                                member_discriminator):
             await ctx.guild.unban(user)
-            await ctx.send(f'L'utilisateur {user.mention} à été déban')
+            await ctx.send(f' {user.mention} à été déban')
             return
         await ctx.send(f"L'utilisateur {user} n'a pas été trouvé.")
 
