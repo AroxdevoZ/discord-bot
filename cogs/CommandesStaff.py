@@ -214,7 +214,8 @@ class CommandesStaff(commands.Cog):
                 admin = ctx.guild.get_member(admin_id)
                 embed.description += f"**Avertissement {i}** donné par: {admin.mention} **Pour la raison suivante:** *'{reason}'*.\n"
                 i += 1
-            await ctx.send(embed=embed)
+            warinfo = bot.get_channel(1019591863738564678)
+            await warinfo.send(embed=embed)
 
         except KeyError:
             await ctx.send("Cet utilisateur n'a aucun avertissement.")
