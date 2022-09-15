@@ -244,6 +244,8 @@ class CommandesStaff(commands.Cog):
         await ctx.channel.purge(limit=1)
         mutedRole = await self.getMutedRole(ctx)
         await member.add_roles(mutedRole, reason=reason)
+        role = discord.utils.get(guild.roles, name='Matelot')
+        await member.remove_roles(role)
         await ctx.send(f"{member.mention} a été mute !")
 
     # Commande pour Mute temporairement un membre
