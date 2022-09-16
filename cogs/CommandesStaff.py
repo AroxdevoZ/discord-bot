@@ -250,7 +250,7 @@ class CommandesStaff(commands.Cog):
     async def getMemberRole(self, ctx):
         roles = ctx.guild.roles
         for role in roles:
-            if role.name == "Matelot" or "Atlas":
+            if role.name == "Matelot":
                 return role
 
         return await self.createMemberRole(ctx)
