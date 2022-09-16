@@ -260,6 +260,7 @@ class CommandesStaff(commands.Cog):
     @commands.has_permissions(manage_roles=True)
     async def mute(self, ctx, member: discord.Member, *, reason="Aucune raison n'a été renseigné"):
         await ctx.channel.purge(limit=1)
+        guild = discord.utils.find(lambda g: g.id == guild_id, bot.guilds)
         mutedRole = await self.getMutedRole(ctx)
         #memberRole = await self.getMemberRole(ctx)
         await member.add_roles(mutedRole, reason=reason)
