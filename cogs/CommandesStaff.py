@@ -250,9 +250,15 @@ class CommandesStaff(commands.Cog):
     async def getMemberRole(self, ctx):
         roles = ctx.guild.roles
         for role in roles:
-            if remove.roles(*roles)
-            #if role.name == "Matelot":
-                #return role
+            if role.name == "Matelot":
+                return role
+        return await self.createMemberRole(ctx)
+    
+    async def getAtlasRole(self, ctx):
+        roles = ctx.guild.roles
+        for role in roles:
+            if role.name == "Atlas":
+                return role
         return await self.createMemberRole(ctx)
 
     # Commande pour Mute un membre
@@ -262,8 +268,10 @@ class CommandesStaff(commands.Cog):
         await ctx.channel.purge(limit=1)
         mutedRole = await self.getMutedRole(ctx)
         memberRole = await self.getMemberRole(ctx)
+        AtlasRole = await self.getAtlasRole(ctx)
         await member.add_roles(mutedRole, reason=reason)
         await member.remove_roles(memberRole, reason=reason)
+        await member.remove_roles(AtlasRole, reason=reason)
         await ctx.send(f"{member.mention} a été mute !")
         
     # Commande pour Mute temporairement un membre
