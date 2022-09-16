@@ -262,9 +262,9 @@ class CommandesStaff(commands.Cog):
         await ctx.channel.purge(limit=1)
         mutedRole = await self.getMutedRole(ctx)
         #memberRole = await self.getMemberRole(ctx)
-        roles = ctx.guild.roles(ctx)
+        allroles = ctx.guild.roles(ctx)
         await member.add_roles(mutedRole, reason=reason)
-        await member.remove_roles(*roles, reason=reason)
+        await member.remove_roles(allroles, reason=reason)
         #await member.remove_roles(memberRole, reason=reason)
         await ctx.send(f"{member.mention} a été mute !")
         
