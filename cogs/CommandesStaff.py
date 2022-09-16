@@ -263,8 +263,8 @@ class CommandesStaff(commands.Cog):
         mutedRole = await self.getMutedRole(ctx)
         #memberRole = await self.getMemberRole(ctx)
         await member.add_roles(mutedRole, reason=reason)
+        await remove_roles(str("Atlas","clash of clan"), reason=None, atomic=True)
         #await member.remove_roles(memberRole, reason=reason)
-        await remove_roles(*role, reason=reason)
         await ctx.send(f"{member.mention} a été mute !")
         
     # Commande pour Mute temporairement un membre
