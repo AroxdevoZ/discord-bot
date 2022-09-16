@@ -24,15 +24,33 @@ class CommandesBasiques(commands.Cog):
 
         await ctx.send(embed=embed)
         
-    # Commande pour générer le lien d'invitation du serveur
+    # Commande pour demander le role createur sur le discord
     @commands.command()
-    async def createur(self, ctx):
+    async def createur(self, ctx, desc=None, rep=None):
         await ctx.channel.purge(limit=1)
-        embed = discord.Embed(title="Comment obtenir le rôle Créateur?", description="Si tu as une chaine YouTube, TikTok ou Twitch et que tu souhaites que tes vidéos/lives soient annoncés sur notre serveur je t'invite à envoyer le lien de cette dernière au capitaine Le_beater qui examinera t'a demande au plus vite. ",color=0x00ff00)
-        embed.set_author(name=ctx.author.name, icon_url=ctx.author.avatar_url)
-        embed.set_thumbnail(url="https://cdn3.emoji.gg/emojis/5596-youtube-logo.png")
+        user = ctx.author
+        await ctx.author.send(
+            '```Veuillez nous indiquer sur quel(s) plateforme(s) ce trouve  votre contenue.```')
+        responseplat = await bot.wait_for('message', check=lambda message: message.author == ctx.author,
+                                          timeout=300)
+        plateforme = responseplat.content
+        await ctx.author.send('```Merci de bien vouloir nous expliquer en quoi consiste votre contenue (gaming, tuto, live,...).```')
+        responseDesc = await bot.wait_for('message', check=lambda message: message.author == ctx.author,
+                                          timeout=300)
+        description = responseDesc.content
+        await ctx.author.send('```Veuillez fournir le ou les liens vers vos plateformes.```')
+        responseRep = await bot.wait_for('message', check=lambda message: message.author == ctx.author, timeout=300)
+        replicate = responseRep.content
+        await user.send('```Merci, un rapport à été envoyez au staff avec toutes vos information, ces dernier reviendrons vers vous au plus vite.```')
+        embed = discord.Embed(title='Demande de role createur', color=0x00ff00)
+        embed.add_field(name='Plateforme', value=plateforme, inline=True)
+        embed.add_field(name='Reporté par', value=user, inline=True)
+        embed.add_field(name='Description', value=description, inline=False)
+        embed.add_field(name='Fichiers joints :', value="Voir ci-dessous", inline=True)
 
-        await ctx.send(embed=embed)
+        adminBug = bot.get_channel(1020289614013026324)  # ID du channel ou le rapport sera envoyez
+        await adminBug.send(embed=embed)
+        await adminBug.send(replicate)
 
     # Commande pour que le Bot repette le texte entré après le !perroquet
     @commands.command()
