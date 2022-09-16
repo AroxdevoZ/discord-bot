@@ -149,20 +149,20 @@ class CommandesStaff(commands.Cog):
         await ban.send(embed=embed)
 
     # Commande pour déban un membre (Ne fonctionne pas)
-    @commands.command()
-    @commands.has_permissions(ban_members=True)
-    async def unban(self, ctx, user, *reason):
-        await ctx.channel.purge(limit=1)
-        reason = " ".join(reason)
-        userName, userId = user.split("#")
-        bannedUsers = await ctx.guild.bans()
-        for i in bannedUsers:
-            if i.user.name == userName and i.user.discriminator == userId:
-                await ctx.guild.unban(i.user, reason=reason)
-                await ctx.send(f"{user} à été unban.")
-                return
+    #@commands.command()
+    #@commands.has_permissions(ban_members=True)
+    #async def unban(self, ctx, user, *reason):
+        #await ctx.channel.purge(limit=1)
+        #reason = " ".join(reason)
+        #userName, userId = user.split("#")
+        #bannedUsers = await ctx.guild.bans()
+        #for i in bannedUsers:
+            #if i.user.name == userName and i.user.discriminator == userId:
+                #await ctx.guild.unban(i.user, reason=reason)
+                #await ctx.send(f"{user} à été unban.")
+                #return
             
-        await ctx.send(f"L'utilisateur {user} n'a pas été trouvé.")
+        #await ctx.send(f"L'utilisateur {user} n'a pas été trouvé.")
 
     # Commande pour avertir un membre (fonctionne mais n'affice pas le message dans le channel approprié et ne garde pas les warn en mémoire)
     #@commands.command()
@@ -238,13 +238,32 @@ class CommandesStaff(commands.Cog):
 
         return await self.createMutedRole(ctx)
 
+    #Création du role Matelot
+    async def createMemberRole(selfself, ctx):
+        memberRole: object = await ctx.guild.create_role(name="Matelot",
+                                                         permissions=discord.Permissions(send_messages=True, speak=True),
+                                                         reason="Creation du role Matelot.")
+        for channel in ctx.guild.channels:
+            await channel.set_permissions(memberRole, send_messages=True, speak=True)
+        return memberRole
+
+    async def getMemberRole(self, ctx):
+        roles = ctx.guild.roles
+        for role in roles:
+            if role.name == "Matelot":
+                return role
+
+        return await self.createMemberRole(ctx)
+
     # Commande pour Mute un membre
     @commands.command()
     @commands.has_permissions(manage_roles=True)
     async def mute(self, ctx, member: discord.Member, *, reason="Aucune raison n'a été renseigné"):
         await ctx.channel.purge(limit=1)
         mutedRole = await self.getMutedRole(ctx)
+        memberRole = await self.getMemberRole(ctx)
         await member.add_roles(mutedRole, reason=reason)
+        await member.remove_roles(memberRole, reason=reason)
         await ctx.send(f"{member.mention} a été mute !")
         
     # Commande pour Mute temporairement un membre
@@ -268,6 +287,8 @@ class CommandesStaff(commands.Cog):
     async def unmute(self, ctx, member: discord.Member, *, reason="Aucune raison n'a été renseigné"):
         await ctx.channel.purge(limit=1)
         mutedRole = await self.getMutedRole(ctx)
+        memberRole = await self.getMemberRole(ctx)
+        await member.add_roles(memberRole, reason=reason)
         await member.remove_roles(mutedRole, reason=reason)
         await ctx.send(f"{member.mention} à été unmute!")
 
