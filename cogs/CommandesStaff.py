@@ -261,10 +261,10 @@ class CommandesStaff(commands.Cog):
     async def mute(self, ctx, member: discord.Member, *, reason="Aucune raison n'a été renseigné"):
         await ctx.channel.purge(limit=1)
         mutedRole = await self.getMutedRole(ctx)
-        #memberRole = await self.getMemberRole(ctx)
+        memberRole = await self.getMemberRole(ctx)
         await member.add_roles(mutedRole, reason=reason)
-        await remove_roles(1018493027645411439, reason=reason)
-        #await member.remove_roles(memberRole, reason=reason)
+        await member.remove_roles(*roles, reason=reason)
+        await member.remove_roles(memberRole, reason=reason)
         await ctx.send(f"{member.mention} a été mute !")
         
     # Commande pour Mute temporairement un membre
