@@ -268,7 +268,7 @@ class CommandesStaff(commands.Cog):
                     elif member.add-roles(mutedRole, reason=reason)
                         role = discord.utils.get(guild.roles, name='Atlas')
                     else:
-                        role = discord.utils.get(guild.roles, name="")
+                        return
         #await member.remove_roles(memberRole, reason=reason)
         await ctx.send(f"{member.mention} a été mute !")
         
