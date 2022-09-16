@@ -48,7 +48,7 @@ class CommandesStaff(commands.Cog):
     # Commande de concour (geaveway)
     @commands.has_permissions(manage_messages=True)
     @commands.command()
-    async def concours(self, ctx):
+    async def concour(self, ctx):
         await ctx.send("Le concours commancera dans 10 secondes. Evoyez \"moi\" dans ce channel pour y participer.")
 
         players = []
@@ -116,20 +116,20 @@ class CommandesStaff(commands.Cog):
                     del day_list[day_list.index(day)]
 
     # Command Pour ban temporairement un membre
-    @commands.command()
-    @commands.has_permissions(ban_members=True)
-    async def tempban(self, ctx, member: discord.Member, days=1):
-        if str(ctx.message.author.name):
-            try:
-                await bot.ban(member, delete_message_days=0)
-                await bot.say('Utilisateur banni pour **' + str(days) + ' jour(s)**')
-                ban_list.append(member)
-                day_list.append(days * 24 * 60 * 60)
-                server_list.append(ctx.message.server)
-            except:
-                await bot.say('Erreur! Utilisateur non actif')
-        else:
-            await bot.say("Vous n'êtes pas autorisé à bannir des utilisateurs!")
+    #@commands.command()
+    #@commands.has_permissions(ban_members=True)
+    #async def tempban(self, ctx, member: discord.Member, days=1):
+        #if str(ctx.message.author.name):
+            #try:
+                #await bot.ban(member, delete_message_days=0)
+                #await bot.say('Utilisateur banni pour **' + str(days) + ' jour(s)**')
+                #ban_list.append(member)
+                #day_list.append(days * 24 * 60 * 60)
+                #server_list.append(ctx.message.server)
+            #except:
+                #await bot.say('Erreur! Utilisateur non actif')
+        #else:
+            #await bot.say("Vous n'êtes pas autorisé à bannir des utilisateurs!")
 
     # Commande pour ban un membre (à amélioré = tempban)
     @commands.command()
@@ -267,19 +267,19 @@ class CommandesStaff(commands.Cog):
         await ctx.send(f"{member.mention} a été mute !")
         
     # Commande pour Mute temporairement un membre
-    @commands.command()
-    @commands.has_permissions(manage_messages=True)
-    async def tempmute(self, ctx, member: discord.Member, time):
-        muted_role = await self.getMutedRole(ctx)
-        time_convert = {"s": 1, "m": 600, "h": 36000, "d": 864000}
-        tempmute = int(time[0]) * time_convert[time[-1]]
-        await ctx.message.delete()
-        await member.add_roles(muted_role)
-        embed = discord.Embed(description=f"✅ **{member.display_name}#{member.discriminator} à été mute avec sucés** {time/60}.",
-                              color=discord.Color.green())
-        await ctx.send(embed=embed, delete_after=30)
-        await asyncio.sleep(tempmute)
-        await member.remove_roles(muted_role)
+    #@commands.command()
+    #@commands.has_permissions(manage_messages=True)
+    #async def tempmute(self, ctx, member: discord.Member, time):
+        #muted_role = await self.getMutedRole(ctx)
+        #time_convert = {"s": 1, "m": 600, "h": 36000, "d": 864000}
+        #tempmute = int(time[0]) * time_convert[time[-1]]
+        #await ctx.message.delete()
+        #await member.add_roles(muted_role)
+        #embed = discord.Embed(description=f"✅ **{member.display_name}#{member.discriminator} à été mute avec sucés** {time/60}.",
+                              #color=discord.Color.green())
+        #await ctx.send(embed=embed, delete_after=30)
+        #await asyncio.sleep(tempmute)
+        #await member.remove_roles(muted_role)
 
     # Commande pour démute un membre
     @commands.command()
