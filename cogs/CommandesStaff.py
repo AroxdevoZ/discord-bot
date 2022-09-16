@@ -249,11 +249,9 @@ class CommandesStaff(commands.Cog):
 
     async def getMemberRole(self, ctx):
         roles = ctx.guild.roles
-        for role in roles:
-            if role.name == "Matelot":
-                return role
-            elif role.name == "Atlas":
-                return role
+        #for role in roles:
+            #if role.name == "Matelot":
+                #return role
         return await self.createMemberRole(ctx)
 
     # Commande pour Mute un membre
