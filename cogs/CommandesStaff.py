@@ -262,7 +262,7 @@ class CommandesStaff(commands.Cog):
         await ctx.channel.purge(limit=1)
         mutedRole = await self.getMutedRole(ctx)
         #memberRole = await self.getMemberRole(ctx)
-        allroles = ctx.guild.roles(name="Matelot"), reason=reason)
+        allroles = ctx.guild.roles(name="Matelot", reason=reason)
         await member.add_roles(mutedRole, reason=reason)
         await member.remove_roles(allroles, reason=reason)
         #await member.remove_roles(memberRole, reason=reason)
