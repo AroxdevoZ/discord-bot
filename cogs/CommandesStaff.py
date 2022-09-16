@@ -239,17 +239,18 @@ class CommandesStaff(commands.Cog):
         return await self.createMutedRole(ctx)
 
     #Création du role Matelot
-    async def createMemberRole(selfself, ctx):
-        memberRole: object = await ctx.guild.create_role(name="Matelot",
-                                                         permissions=discord.Permissions(send_messages=True, speak=True),
-                                                         reason="Creation du role Matelot.")
-        for channel in ctx.guild.channels:
-            await channel.set_permissions(memberRole, send_messages=True, speak=True)
-        return memberRole
+    #async def createMemberRole(selfself, ctx):
+        #memberRole: object = await ctx.guild.create_role(name="Matelot",
+                                                         #permissions=discord.Permissions(send_messages=True, speak=True),
+                                                         #reason="Creation du role Matelot.")
+        #for channel in ctx.guild.channels:
+            #await channel.set_permissions(memberRole, send_messages=True, speak=True)
+        #return memberRole
 
     async def getMemberRole(self, ctx):
         roles = ctx.guild.roles
-        #for role in roles:
+        for role in roles:
+            if remove.roles(*roles)
             #if role.name == "Matelot":
                 #return role
         return await self.createMemberRole(ctx)
